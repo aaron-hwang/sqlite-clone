@@ -14,3 +14,13 @@ void close_input_buffer(InputBuffer* buf) {
     free(buf->buffer);
     free(buf);
 }
+
+void read_input(InputBuffer* buf) {
+    ssize_t bytes_read = getline(&buf->buffer, &buf->buffer_len, stdin);
+    if (bytes_read <= 0) {
+        printf("Error reading from stdin\n");
+        return;
+    }   
+    buf->input_length -= 1;
+    buf->buffer[bytes_read - 1] = 0;
+}
